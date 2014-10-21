@@ -59,7 +59,7 @@ println execution.getVariable("code_round_2")?.purposeCode
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:scriptTask id="ScriptTask_2" name="Save">
+    <bpmn2:scriptTask id="ScriptTask_2" name="Save in Mongo">
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Save time---------------"]]></bpmn2:script>
