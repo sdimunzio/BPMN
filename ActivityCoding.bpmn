@@ -11,7 +11,6 @@
 			]]><camunda:inputParameter name="GroupId">ROLE_ACTIVITY_CODER</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
-			]]><camunda:outputParameter name="outerVar">${code_round_2}</camunda:outputParameter><![CDATA[
 		]]></camunda:inputOutput>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -28,7 +27,6 @@
 			]]><camunda:inputParameter name="GroupId">ROLE_ACTIVITY_CODER</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
-			]]><camunda:outputParameter name="outerVar">${code_round_1}</camunda:outputParameter><![CDATA[
 		]]></camunda:inputOutput>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
