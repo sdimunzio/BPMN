@@ -24,6 +24,19 @@
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
+    <bpmn2:startEvent id="StartEvent_1" name="ActivityCoding &#xD;&#xA;Start Event">
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1"/>
+    <bpmn2:scriptTask id="ScriptTask_1" name="AutoArbitration" scriptFormat="groovy">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
+println execution.getVariable("code_round_1")?.purposeCode
+println execution.getVariable("code_round_2")?.purposeCode
+println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>AutoArbitration</bpmn2:outgoing>
@@ -35,39 +48,26 @@
     <bpmn2:sequenceFlow id="ManualArbitration" name="Manual &#xD;&#xA;Arbitration" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[return execution.getVariable("arbitration")==null;]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="UserTask_1" name="Manual Arbitration">
+      <bpmn2:incoming>ManualArbitration</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_1" targetRef="InclusiveGateway_1"/>
     <bpmn2:inclusiveGateway id="InclusiveGateway_1">
       <bpmn2:incoming>AutoArbitration</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:inclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="InclusiveGateway_1" targetRef="ScriptTask_2"/>
-    <bpmn2:endEvent id="EndEvent_1">
-      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
-    </bpmn2:endEvent>
     <bpmn2:scriptTask id="ScriptTask_2" name="Save">
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Save time---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_2" targetRef="EndEvent_1"/>
-    <bpmn2:startEvent id="StartEvent_1" name="ActivityCoding &#xD;&#xA;Start Event">
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1"/>
-    <bpmn2:userTask id="UserTask_1" name="Manual Arbitration">
-      <bpmn2:incoming>ManualArbitration</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_1" targetRef="InclusiveGateway_1"/>
-    <bpmn2:scriptTask id="ScriptTask_1" name="AutoArbitration" scriptFormat="groovy">
-      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
-      <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
-println execution.getVariable("code_round_1")?.purposeCode
-println execution.getVariable("code_round_2")?.purposeCode
-println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
-    </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="End&#xD;&#xA;">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+    </bpmn2:endEvent>
     <bpmn2:textAnnotation id="TextAnnotation_1">
       <bpmn2:text>Activity Coding Default Workflow</bpmn2:text>
     </bpmn2:textAnnotation>
@@ -148,75 +148,75 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="1070.0" y="31.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="985.0" y="155.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1088.0" y="72.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1003.0" y="196.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_ScriptTask_2" targetElement="_BPMNShape_ExclusiveGateway_2">
         <di:waypoint xsi:type="dc:Point" x="688.0" y="169.0"/>
-        <di:waypoint xsi:type="dc:Point" x="756.0" y="169.0"/>
+        <di:waypoint xsi:type="dc:Point" x="730.0" y="169.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="730.0" y="169.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="706.0" y="169.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="756.0" y="144.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="730.0" y="144.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="781.0" y="199.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="755.0" y="199.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_InclusiveGateway_2" bpmnElement="InclusiveGateway_1">
-        <dc:Bounds height="50.0" width="50.0" x="888.0" y="144.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="887.0" y="144.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="913.0" y="199.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="912.0" y="199.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="AutoArbitration" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_InclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="806.0" y="169.0"/>
-        <di:waypoint xsi:type="dc:Point" x="888.0" y="169.0"/>
+        <di:waypoint xsi:type="dc:Point" x="780.0" y="169.0"/>
+        <di:waypoint xsi:type="dc:Point" x="887.0" y="169.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="96.0" x="780.0" y="110.0"/>
+          <dc:Bounds height="22.0" width="96.0" x="761.0" y="120.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ScriptTask_3" bpmnElement="ScriptTask_2">
-        <dc:Bounds height="53.0" width="100.0" x="863.0" y="36.0"/>
+        <dc:Bounds height="53.0" width="100.0" x="863.0" y="51.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_InclusiveGateway_2" targetElement="_BPMNShape_ScriptTask_3">
-        <di:waypoint xsi:type="dc:Point" x="913.0" y="144.0"/>
-        <di:waypoint xsi:type="dc:Point" x="913.0" y="88.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="144.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="119.0"/>
+        <di:waypoint xsi:type="dc:Point" x="913.0" y="119.0"/>
+        <di:waypoint xsi:type="dc:Point" x="913.0" y="103.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="910.0" y="119.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="909.0" y="119.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_5" bpmnElement="UserTask_1">
-        <dc:Bounds height="80.0" width="100.0" x="732.0" y="291.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="706.0" y="301.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="ManualArbitration" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_UserTask_5">
-        <di:waypoint xsi:type="dc:Point" x="781.0" y="194.0"/>
-        <di:waypoint xsi:type="dc:Point" x="781.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="782.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="782.0" y="291.0"/>
+        <di:waypoint xsi:type="dc:Point" x="755.0" y="194.0"/>
+        <di:waypoint xsi:type="dc:Point" x="755.0" y="246.0"/>
+        <di:waypoint xsi:type="dc:Point" x="756.0" y="246.0"/>
+        <di:waypoint xsi:type="dc:Point" x="756.0" y="301.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="65.0" x="796.0" y="238.0"/>
+          <dc:Bounds height="38.0" width="65.0" x="724.0" y="266.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_UserTask_5" targetElement="_BPMNShape_InclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="832.0" y="331.0"/>
-        <di:waypoint xsi:type="dc:Point" x="913.0" y="331.0"/>
-        <di:waypoint xsi:type="dc:Point" x="913.0" y="236.0"/>
-        <di:waypoint xsi:type="dc:Point" x="913.0" y="194.0"/>
+        <di:waypoint xsi:type="dc:Point" x="806.0" y="341.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="341.0"/>
+        <di:waypoint xsi:type="dc:Point" x="912.0" y="194.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="910.0" y="326.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="889.0" y="341.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ScriptTask_3" targetElement="_BPMNShape_EndEvent_4">
-        <di:waypoint xsi:type="dc:Point" x="963.0" y="62.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1016.0" y="62.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1016.0" y="49.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1070.0" y="49.0"/>
+        <di:waypoint xsi:type="dc:Point" x="963.0" y="78.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1002.0" y="78.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1003.0" y="155.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1032.0" y="49.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="962.0" y="78.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_2" bpmnElement="TextAnnotation_1">
