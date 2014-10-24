@@ -57,7 +57,7 @@
 
 if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
     println "Running auto arbitration..."
-    org.camunda.bpm.getstarted.loanapproval.CodeRound  arbitrated = new org.camunda.bpm.getstarted.loanapproval.CodeRound()
+    org.aiddata.internal.common.model.coding.CodeRound  arbitrated = new org.aiddata.internal.common.model.coding.CodeRound()
     arbitrated.setProject(code_round_1?.project)
     arbitrated.setPurpose(code_round_1?.purpose)
     arbitrated.setHasFeasibilityStudy(code_round_1?.hasFeasibilityStudy)
@@ -85,10 +85,10 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="save==null" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="save!=null" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" name="Manual Arbitration">
