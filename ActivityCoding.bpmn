@@ -85,11 +85,11 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_5" name="save==false" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="auto arbitration &#xD;&#xA;== false" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("arbitration")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_11" name="save != false" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="auto arbitration != false" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("arbitration")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" name="Manual Arbitration">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
@@ -227,7 +227,7 @@ println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
         <di:waypoint xsi:type="dc:Point" x="643.0" y="54.0"/>
         <di:waypoint xsi:type="dc:Point" x="696.0" y="55.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="662.0" y="54.0"/>
+          <dc:Bounds height="38.0" width="106.0" x="617.0" y="76.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_4" bpmnElement="ParallelGateway_3">
