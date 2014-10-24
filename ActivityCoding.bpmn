@@ -28,7 +28,7 @@
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="code_round_1" targetRef="ParallelGateway_2"/>
-    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" name="Activity Coding&#xD;&#xA;">
+    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" name="Activity Coding">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
