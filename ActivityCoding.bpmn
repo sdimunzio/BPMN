@@ -81,17 +81,15 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="AutoArbitration_Flow">
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+      <bpmn2:outgoing>AutoArbitration_Flow</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="manual" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("isAuto")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_11" name="autoArbitration" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("isAuto")!=null}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="AutoArbitration_Flow" name="autoArbitration" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3"/>
     <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" name="Manual Arbitration">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
@@ -100,7 +98,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_1" targetRef="ParallelGateway_3"/>
     <bpmn2:parallelGateway id="ParallelGateway_3">
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
-      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:incoming>AutoArbitration_Flow</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="ParallelGateway_3" targetRef="ScriptTask_2"/>
@@ -246,7 +244,7 @@ println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="742.0" y="110.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_ParallelGateway_4">
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="AutoArbitration_Flow" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_ParallelGateway_4">
         <di:waypoint xsi:type="dc:Point" x="618.0" y="79.0"/>
         <di:waypoint xsi:type="dc:Point" x="618.0" y="151.0"/>
         <di:waypoint xsi:type="dc:Point" x="720.0" y="151.0"/>
