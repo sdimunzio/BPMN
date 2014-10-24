@@ -99,7 +99,8 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-----------SAVE IN MONGO DB SCRIPT INIT-----------"
 
-org.aiddata.internal.mongo.service.DefaultProjectMongoService.getInstance().updateCodeRound(execution.getVariable("arbitration"))
+org.aiddata.internal.common.model.ActivityCodingResponse activityCoding = execution.getVariable("arbitration")
+org.aiddata.internal.metadata.services.DefaultProjectMongoService.getInstance().updateCodeRound(activityCoding)
 
 println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
     </bpmn2:scriptTask>
