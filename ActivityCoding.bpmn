@@ -89,7 +89,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("arbitration")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="auto arbitration != false" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("arbitration")==null}]]></bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("arbitration")!=null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" name="Manual Arbitration">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
