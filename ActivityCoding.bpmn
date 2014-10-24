@@ -58,25 +58,25 @@ code_round_1 = execution.getVariable("code_round_1")
 code_round_2 =  execution.getVariable("code_round_2")
 
 if (code_round_1.getPurpose().getCode() == code_round_2.getPurpose().getCode()) {
-    println "Running auto arbitration...";
-    org.aiddata.internal.common.model.coding.CodeRound  arbitrated = new org.aiddata.internal.common.model.coding.CodeRound();
-    arbitrated.setProject(code_round_1.getProject());
-    arbitrated.setPurpose(code_round_1.getPurpose());
-    arbitrated.setHasFeasibilityStudy(code_round_1.getHasFeasibilityStudy());
-    arbitrated.setHasTechnicalAssistance(code_round_1.getHasTechnicalAssistance());
-    java.util.ArrayList<Activity> activities = new java.util.ArrayList<>();
+    println "Running auto arbitration..."
+    org.aiddata.internal.common.model.coding.CodeRound  arbitrated = new org.aiddata.internal.common.model.coding.CodeRound()
+    arbitrated.setProject(code_round_1.getProject())
+    arbitrated.setPurpose(code_round_1.getPurpose())
+    arbitrated.setHasFeasibilityStudy(code_round_1.getHasFeasibilityStudy())
+    arbitrated.setHasTechnicalAssistance(code_round_1.getHasTechnicalAssistance())
+    def activities = []
     activities.addAll(code_round_1.getActivities());
-    activities.addAll(code_round_2.getActivities());
-    arbitrated.setActivities(activities);
-    arbitrated.setCreated(new java.util.Date());
-    arbitrated.setCoder(null);
-    arbitrated.setLevel(org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL);
-    arbitrated.setAutoCreated(true);
+    activities.addAll(code_round_2.getActivities())
+    arbitrated.setActivities(activities)
+    arbitrated.setCreated(new Date())
+    arbitrated.setCoder(null)
+    arbitrated.setLevel(org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL)
+    arbitrated.setAutoCreated(true)
     org.aiddata.internal.common.model.ActivityCodingResponse save = org.aiddata.internal.workflow.service.DefaultActivityCodingService.getInstance().save(arbitrated);
           
     execution.setVariable("arbitration",save);
 } else {
-    println "Cant arbitrate this one...";
+    println "Cant arbitrate this one..."
 }
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
