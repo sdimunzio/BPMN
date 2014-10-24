@@ -94,28 +94,22 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:scriptTask id="ScriptTask_2" name="Save Task" scriptFormat="groovy">
-      <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
-      <bpmn2:script><![CDATA[println "-----------SAVE IN MONGO DB SCRIPT INIT-----------"
-
-def activityCoding = execution.getVariable("arbitration")
-org.aiddata.internal.metadata.services.DefaultProjectMongoService.getInstance().updateCodeRound(activityCoding)
-
-println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
-    </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="ScriptTask_2" targetRef="EndEvent_1"/>
-    <bpmn2:endEvent id="EndEvent_1">
-      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
-    </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_2"/>
     <bpmn2:sequenceFlow id="SequenceFlow_15" name="" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
       <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_16" name="" sourceRef="ExclusiveGateway_2" targetRef="ScriptTask_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_1"/>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:delegateExpression="${arbitrationDelegate}" name="Arbitration Updater">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ActivityCoding">
@@ -191,21 +185,11 @@ println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="837.0" y="234.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="634.0" y="288.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="855.0" y="275.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="652.0" y="329.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_ScriptTask_3" bpmnElement="ScriptTask_2">
-        <dc:Bounds height="80.0" width="100.0" x="696.0" y="212.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_ScriptTask_3" targetElement="_BPMNShape_EndEvent_4">
-        <di:waypoint xsi:type="dc:Point" x="796.0" y="252.0"/>
-        <di:waypoint xsi:type="dc:Point" x="837.0" y="252.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="810.0" y="252.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ScriptTask_2" targetElement="_BPMNShape_ExclusiveGateway_3">
         <di:waypoint xsi:type="dc:Point" x="544.0" y="55.0"/>
         <di:waypoint xsi:type="dc:Point" x="593.0" y="54.0"/>
@@ -250,11 +234,22 @@ println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="630.0" y="145.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="_BPMNShape_ExclusiveGateway_6" targetElement="_BPMNShape_ScriptTask_3">
-        <di:waypoint xsi:type="dc:Point" x="745.0" y="170.0"/>
-        <di:waypoint xsi:type="dc:Point" x="745.0" y="191.0"/>
-        <di:waypoint xsi:type="dc:Point" x="746.0" y="191.0"/>
-        <di:waypoint xsi:type="dc:Point" x="746.0" y="212.0"/>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="838.0" y="189.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ExclusiveGateway_6" targetElement="_BPMNShape_ServiceTask_2">
+        <di:waypoint xsi:type="dc:Point" x="770.0" y="145.0"/>
+        <di:waypoint xsi:type="dc:Point" x="888.0" y="145.0"/>
+        <di:waypoint xsi:type="dc:Point" x="888.0" y="189.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="885.0" y="153.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="838.0" y="229.0"/>
+        <di:waypoint xsi:type="dc:Point" x="754.0" y="229.0"/>
+        <di:waypoint xsi:type="dc:Point" x="754.0" y="306.0"/>
+        <di:waypoint xsi:type="dc:Point" x="670.0" y="306.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
