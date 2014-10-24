@@ -85,7 +85,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
     activities.addAll(code_round_2?.activities)
    
     arbitrated.activities=activities
-	arbitrated.created=new Date())
+	arbitrated.created=new Date()
     arbitrated.coder=null
     arbitrated.level=org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL
     arbitrated.autoCreated=true
