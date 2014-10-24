@@ -54,10 +54,30 @@
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
-code_round_1 = execution.getVariable("code_round_1")
-code_round_2 =  execution.getVariable("code_round_2")
 
-println code_round_1 ]]></bpmn2:script>
+if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
+    println "Running auto arbitration..."
+    org.camunda.bpm.getstarted.loanapproval.CodeRound  arbitrated = new org.camunda.bpm.getstarted.loanapproval.CodeRound()
+    arbitrated.setProject(code_round_1?.project)
+    arbitrated.setPurpose(code_round_1?.purpose)
+    arbitrated.setHasFeasibilityStudy(code_round_1?.hasFeasibilityStudy)
+    arbitrated.setHasTechnicalAssistance(code_round_1?.hasTechnicalAssistance)
+    java.util.List activities = new java.util.ArrayList()
+    activities.addAll(code_round_1?.activities)
+    activities.addAll(code_round_2?.activities)
+    arbitrated.setActivities(activities)
+	arbitrated.setCreated(new Date())
+    arbitrated.setCoder(null)
+    arbitrated.setLevel(org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL)
+    arbitrated.setAutoCreated(true)
+    org.aiddata.internal.common.model.ActivityCodingResponse save = org.aiddata.internal.workflow.service.DefaultActivityCodingService.getInstance().save(arbitrated);
+          
+    execution.setVariable("arbitration",save);
+	println "Running auto arbitration done!"
+} else {
+    println "Cant arbitrate this one..."
+}
+println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
@@ -66,10 +86,10 @@ println code_round_1 ]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_1">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[execution.getVariable("save")==null]]></bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ExclusiveGateway_1" targetRef="ParallelGateway_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[execution.getVariable("save")==null]]></bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("save")==null}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" name="Manual Arbitration">
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
