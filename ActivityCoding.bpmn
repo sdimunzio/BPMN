@@ -70,7 +70,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
     arbitrated.setCoder(null)
     arbitrated.setLevel(org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL)
     arbitrated.setAutoCreated(true)
-    org.aiddata.internal.common.model.ActivityCodingResponse save = org.aiddata.internal.workflow.service.DefaultActivityCodingService.getInstance().save(arbitrated);
+    org.aiddata.internal.common.model.ActivityCodingResponse save = org.aiddata.internal.workflow.service.DefaultActivityCodingService.getInstance().save(arbitrated)
           
     execution.setVariable("arbitration",save);
     execution.setVariable("isAuto","true");
@@ -81,7 +81,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="SequenceFlow_15">
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
@@ -99,8 +99,8 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-----------SAVE IN MONGO DB SCRIPT INIT-----------"
 
-def activityCoding = execution.getVariable("arbitration")
-org.aiddata.internal.metadata.services.DefaultProjectMongoService.getInstance().updateCodeRound(activityCoding)
+org.aiddata.internal.common.model.ActivityCodingResponse saved = execution.getVariable("arbitration");
+org.aiddata.internal.metadata.services.DefaultProjectMongoService.getInstance().updateCodeRound(saved);
 
 println "----------SAVE IN MONGO DB SCRIPT DONE ----------"]]></bpmn2:script>
     </bpmn2:scriptTask>
