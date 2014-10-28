@@ -49,7 +49,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ParallelGateway_1" targetRef="code_round_2"/>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="code_round_1"/>
-    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" name="Activity Coding 2">
+    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" name="Activity Coding">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
@@ -70,7 +70,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
-    <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding 1">
+    <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
