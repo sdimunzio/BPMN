@@ -37,12 +37,12 @@
     <bpmn2:endEvent id="EndEvent_1">
       <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persit Code Round #1&#xD;&#xA;">
+    <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #1">
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="saveAC1" targetRef="ParallelGateway_2"/>
-    <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persit Code Round #2">
+    <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #2">
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -89,7 +89,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
 	println "Running auto arbitration..."
 
     def  arbitrated = new java.util.HashMap()
-	def  activities = new java.util.ArrayList()
+	def  activities = new java.util.HashSet()
     
 	
     arbitrated.project=code_round_1?.project
