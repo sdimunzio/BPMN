@@ -64,12 +64,12 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="code_round_2" targetRef="complete2"/>
-    <bpmn2:serviceTask id="complete2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Complete Task 2&#xD;&#xA;">
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="code_round_2" targetRef="saveAC2"/>
+    <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Save Task 2">
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="complete2" targetRef="ParallelGateway_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
     <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding 1">
       <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
       <bpmn2:extensionElements>
@@ -81,24 +81,23 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
-        <camunda:executionListener event="start"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="code_round_1" targetRef="complete1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="code_round_1" targetRef="saveAC1"/>
     <bpmn2:parallelGateway id="ParallelGateway_2" name="Task Join">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
-    <bpmn2:serviceTask id="complete1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Complete Task 1">
+    <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Save Task 1">
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="complete1" targetRef="ParallelGateway_2"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="saveAC1" targetRef="ParallelGateway_2"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="SequenceFlow_15">
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
@@ -289,7 +288,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="1033.0" y="142.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_5" bpmnElement="complete1">
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_5" bpmnElement="saveAC1">
         <dc:Bounds height="80.0" width="100.0" x="295.0" y="24.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_5" targetElement="_BPMNShape_ParallelGateway_3">
@@ -301,7 +300,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="407.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_6" bpmnElement="complete2">
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_6" bpmnElement="saveAC2">
         <dc:Bounds height="80.0" width="100.0" x="295.0" y="187.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ServiceTask_6" targetElement="_BPMNShape_ParallelGateway_3">
