@@ -28,8 +28,13 @@
     <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" name="Activity Flag Resolution">
-      <bpmn2:documentation>code_round_1</bpmn2:documentation>
+    <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" name="Activity Flag Resolution">
+      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -40,8 +45,13 @@
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
-    <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" name="Activity Flag Resolution">
-      <bpmn2:documentation>code_round_2</bpmn2:documentation>
+    <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" name="Activity Flag Resolution">
+      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -50,13 +60,6 @@
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1"/>
-    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task Splitter">
-      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
-    </bpmn2:parallelGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ParallelGateway_1" targetRef="code_round_2"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="code_round_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
       <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
@@ -120,12 +123,6 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:parallelGateway id="ParallelGateway_2" name="Task Join">
-      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
-    </bpmn2:parallelGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
     <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #1">
       <bpmn2:documentation>code_round_1</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
@@ -159,6 +156,19 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="arbitration" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task&#xD;&#xA;Splitter">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ParallelGateway_1" targetRef="code_round_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="code_round_1"/>
+    <bpmn2:parallelGateway id="ParallelGateway_2" name="Task&#xD;&#xA;Join">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
   <bpmn2:message id="Message_2" name="code_round_2"/>
@@ -179,7 +189,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_2" bpmnElement="ParallelGateway_1">
         <dc:Bounds height="50.0" width="50.0" x="93.0" y="234.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="90.0" x="144.0" y="249.0"/>
+          <dc:Bounds height="38.0" width="47.0" x="143.0" y="240.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_ParallelGateway_2" targetElement="_BPMNShape_UserTask_4">
@@ -205,7 +215,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_3" bpmnElement="ParallelGateway_2">
         <dc:Bounds height="50.0" width="50.0" x="441.0" y="234.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="61.0" x="377.0" y="255.0"/>
+          <dc:Bounds height="38.0" width="44.0" x="399.0" y="240.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_UserTask_3" targetElement="_BPMNShape_ServiceTask_5">
