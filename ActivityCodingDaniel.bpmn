@@ -35,6 +35,7 @@
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="activity_flag_1" targetRef="EndEvent_2"/>
     <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #2">
+      <bpmn2:documentation>code_round_2</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -49,7 +50,7 @@
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1"/>
-    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task Splitter 1">
+    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task Splitter">
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
@@ -126,6 +127,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
     <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #1">
+      <bpmn2:documentation>code_round_1</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>

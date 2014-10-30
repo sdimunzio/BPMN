@@ -50,7 +50,7 @@
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1"/>
-    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task Splitter 1">
+    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task Splitter">
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
