@@ -132,7 +132,6 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
-        <camunda:taskListener event="create"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
