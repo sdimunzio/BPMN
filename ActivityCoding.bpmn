@@ -2,7 +2,7 @@
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_DdZocL47EeOQo_IRkjDF6w" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
     <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
 			]]><camunda:inputParameter name="Locale">en-UK</camunda:inputParameter><![CDATA[
@@ -29,7 +29,7 @@
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Activity Coding Flag Resolution">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
@@ -46,7 +46,7 @@
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
     <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Activity Coding Flag Resolution">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
@@ -122,7 +122,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="code_round_1_flag_event" targetRef="activity_flag_1"/>
     <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
 			]]><camunda:inputParameter name="Locale">en-UK</camunda:inputParameter><![CDATA[
@@ -161,7 +161,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
     <bpmn2:userTask id="arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" camunda:formKey="activity-coding-arbitration" name="Manual Arbitration">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -171,7 +171,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:endEvent>
     <bpmn2:boundaryEvent id="BoundaryEvent_3" name="" attachedToRef="arbitration">
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_3"/>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3"/>
     </bpmn2:boundaryEvent>
     <bpmn2:userTask id="UserTask_2" camunda:formKey="flag-resolution" name="Activity Arbitration Flag Resolution">
       <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
@@ -189,6 +189,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
   <bpmn2:message id="Message_2" name="code_round_2"/>
+  <bpmn2:message id="Message_3" name="arbitration"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ActivityCoding">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
