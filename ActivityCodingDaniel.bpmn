@@ -2,7 +2,7 @@
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_DdZocL47EeOQo_IRkjDF6w" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
     <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" name="Activity Coding">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
 			]]><camunda:inputParameter name="Locale">en-UK</camunda:inputParameter><![CDATA[
@@ -29,7 +29,7 @@
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" name="Activity Flag Resolution">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
@@ -46,7 +46,7 @@
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
     <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" name="Activity Flag Resolution">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
@@ -135,7 +135,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="BoundaryEvent_1" targetRef="activity_flag_1"/>
     <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
 			]]><camunda:inputParameter name="Locale">en-UK</camunda:inputParameter><![CDATA[
@@ -151,7 +151,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="code_round_1" targetRef="saveAC1"/>
     <bpmn2:userTask id="arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" name="Manual Arbitration">
-      <bpmn2:documentation>${project.getId()} - ${project.getTitle()}</bpmn2:documentation>
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
