@@ -39,7 +39,7 @@
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="activity_flag_1" targetRef="EndEvent_2"/>
-    <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #2">
+    <bpmn2:serviceTask id="saveAC2" camunda:expression="${defaultActivityCodingService.doWork.save(null)}" name="Persist Code Round #2">
       <bpmn2:documentation>code_round_2</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
@@ -110,7 +110,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
 println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.util.CompleteTaskDelegate" name="Persist Code Round #1">
+    <bpmn2:serviceTask id="saveAC1" camunda:expression="${defaultActivityCodingService.doWork.save(null)}" name="Persist Code Round #1">
       <bpmn2:documentation>code_round_1</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
