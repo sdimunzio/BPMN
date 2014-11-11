@@ -155,7 +155,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="persit_auto_arbitration" targetRef="ServiceTask_1"/>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.util.UpdaterDelegate" name="Save Task">
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
     </bpmn2:serviceTask>
