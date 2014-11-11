@@ -260,7 +260,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="1248.0" y="94.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="89.0" x="1142.0" y="93.0"/>
+          <dc:Bounds height="38.0" width="89.0" x="1128.0" y="59.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ScriptTask_2" targetElement="_BPMNShape_ExclusiveGateway_3">
