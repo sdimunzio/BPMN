@@ -41,6 +41,11 @@
     <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="activity_flag_1" targetRef="EndEvent_2"/>
     <bpmn2:serviceTask id="saveAC2" camunda:class="org.aiddata.internal.workflow.delegate.coding.CodingCompletedDelegate" name="Persist Code Round #2">
       <bpmn2:documentation>code_round_2</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:field name="taskId">
+          <camunda:string>code_round_2</camunda:string>
+        </camunda:field>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -112,6 +117,11 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="ScriptTask_1" targetRef="ExclusiveGateway_1"/>
     <bpmn2:serviceTask id="saveAC1" camunda:class="org.aiddata.internal.workflow.delegate.coding.CodingCompletedDelegate" name="Persist Code Round #1">
       <bpmn2:documentation>code_round_1</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:field name="taskId">
+          <camunda:string>code_round_1</camunda:string>
+        </camunda:field>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -151,6 +161,11 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
     <bpmn2:serviceTask id="persit_auto_arbitration" camunda:class="org.aiddata.internal.workflow.delegate.coding.ArbitrationCompletedDelegate" name="Persist Arbitration">
+      <bpmn2:extensionElements>
+        <camunda:field name="taskId">
+          <camunda:expression>arbitration</camunda:expression>
+        </camunda:field>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
     </bpmn2:serviceTask>
