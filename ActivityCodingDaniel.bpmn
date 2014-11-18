@@ -70,7 +70,7 @@
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_16" name="" sourceRef="ExclusiveGateway_2" targetRef="persit_auto_arbitration"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_16" name="" sourceRef="ExclusiveGateway_2" targetRef="persist_auto_arbitration"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="SequenceFlow_15">
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
@@ -104,8 +104,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
     arbitrated.level=org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL
     arbitrated.autoCreated=true
 	      
-    execution.setVariable("arbitration",arbitrated);
-    println "Execution id: " + execution.getId();
+    execution.setVariableLocal("arbitration",arbitrated);
     execution.setVariable("isAuto","true");
 
     println "Running auto arbitration done!"
@@ -161,7 +160,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="ScriptTask_1"/>
-    <bpmn2:serviceTask id="persit_auto_arbitration" camunda:class="org.aiddata.internal.workflow.delegate.coding.activity.ArbitrationPersistenceDelegate" name="Persist Arbitration">
+    <bpmn2:serviceTask id="persist_auto_arbitration" camunda:class="org.aiddata.internal.workflow.delegate.coding.activity.ArbitrationPersistenceDelegate" name="Persist Arbitration">
       <bpmn2:extensionElements>
         <camunda:field name="taskId">
           <camunda:string>arbitration</camunda:string>
@@ -170,7 +169,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="persit_auto_arbitration" targetRef="ServiceTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="persist_auto_arbitration" targetRef="ServiceTask_1"/>
     <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
@@ -359,7 +358,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="1251.0" y="282.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_4" bpmnElement="persit_auto_arbitration">
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_4" bpmnElement="persist_auto_arbitration">
         <dc:Bounds height="80.0" width="100.0" x="936.0" y="148.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="_BPMNShape_ServiceTask_4" targetElement="_BPMNShape_ServiceTask_3">
