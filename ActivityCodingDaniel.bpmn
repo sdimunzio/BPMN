@@ -105,6 +105,7 @@ if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
     arbitrated.autoCreated=true
 	      
     execution.setVariable("arbitration",arbitrated);
+    println "Execution id: " + execution.getId();
     execution.setVariable("isAuto","true");
 
     println "Running auto arbitration done!"
