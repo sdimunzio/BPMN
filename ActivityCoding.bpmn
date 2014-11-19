@@ -25,11 +25,8 @@
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="BoundaryEvent_2" targetRef="activity_flag_2"/>
-    <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
-      <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Activity Coding Flag Resolution">
-      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
+    <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
+      <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
@@ -49,8 +46,8 @@
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="saveAC2" targetRef="ParallelGateway_2"/>
-    <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Activity Coding Flag Resolution">
-      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
+    <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
+      <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
@@ -168,36 +165,38 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="persit_auto_arbitration" targetRef="ServiceTask_1"/>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
-      <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
     <bpmn2:userTask id="arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" camunda:formKey="activity-coding-arbitration" name="Manual Arbitration">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="arbitration" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:endEvent id="EndEvent_1" name="End Activity &#xD;&#xA;Coding">
-      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
-    </bpmn2:endEvent>
     <bpmn2:boundaryEvent id="BoundaryEvent_3" name="" attachedToRef="arbitration">
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3"/>
     </bpmn2:boundaryEvent>
     <bpmn2:userTask id="UserTask_2" camunda:formKey="flag-resolution" name="Activity Arbitration Flag Resolution">
       <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="BoundaryEvent_3" targetRef="UserTask_2"/>
-    <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text>We should  define some custom service task that can replace the manual coding</bpmn2:text>
-    </bpmn2:textAnnotation>
+    <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_2" targetRef="EndEvent_4"/>
+    <bpmn2:endEvent id="EndEvent_4">
+      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
+      <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="End ">
+      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
+      <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
+    </bpmn2:endEvent>
     <bpmn2:textAnnotation id="TextAnnotation_2">
       <bpmn2:text>Task Count per type</bpmn2:text>
-    </bpmn2:textAnnotation>
-    <bpmn2:textAnnotation id="TextAnnotation_3">
-      <bpmn2:text>${defaultActivityCodingService.save(String variable)</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
@@ -271,9 +270,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="1248.0" y="94.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="1308.0" y="170.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="89.0" x="1128.0" y="59.0"/>
+          <dc:Bounds height="22.0" width="33.0" x="1310.0" y="211.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ScriptTask_2" targetElement="_BPMNShape_ExclusiveGateway_3">
@@ -333,7 +332,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_3" bpmnElement="ServiceTask_1">
-        <dc:Bounds height="80.0" width="100.0" x="1204.0" y="291.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="1149.0" y="148.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="_BPMNShape_ExclusiveGateway_6" targetElement="_BPMNShape_ServiceTask_4">
         <di:waypoint xsi:type="dc:Point" x="895.0" y="263.0"/>
@@ -345,12 +344,10 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_17" sourceElement="_BPMNShape_ServiceTask_3" targetElement="_BPMNShape_EndEvent_4">
-        <di:waypoint xsi:type="dc:Point" x="1254.0" y="291.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1254.0" y="229.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1266.0" y="229.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1266.0" y="130.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1249.0" y="188.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1308.0" y="188.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1251.0" y="282.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="1255.0" y="188.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_4" bpmnElement="persit_auto_arbitration">
@@ -358,11 +355,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="_BPMNShape_ServiceTask_4" targetElement="_BPMNShape_ServiceTask_3">
         <di:waypoint xsi:type="dc:Point" x="1036.0" y="188.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1070.0" y="188.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1070.0" y="331.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1204.0" y="331.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1149.0" y="188.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1067.0" y="211.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="1090.0" y="188.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_5" bpmnElement="saveAC1">
@@ -434,26 +429,20 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_17" bpmnElement="EndEvent_3">
-        <dc:Bounds height="36.0" width="36.0" x="467.0" y="447.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="576.0" y="447.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="82.0" x="444.0" y="488.0"/>
+          <dc:Bounds height="22.0" width="82.0" x="553.0" y="488.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_19" sourceElement="_BPMNShape_UserTask_11" targetElement="_BPMNShape_EndEvent_17">
         <di:waypoint xsi:type="dc:Point" x="424.0" y="465.0"/>
-        <di:waypoint xsi:type="dc:Point" x="467.0" y="465.0"/>
+        <di:waypoint xsi:type="dc:Point" x="576.0" y="465.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="6.0" width="6.0" x="444.0" y="479.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_2" bpmnElement="TextAnnotation_1">
-        <dc:Bounds height="42.0" width="563.0" x="267.0" y="551.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_3" bpmnElement="TextAnnotation_2">
         <dc:Bounds height="50.0" width="85.0" x="36.0" y="25.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_4" bpmnElement="TextAnnotation_3">
-        <dc:Bounds height="41.0" width="400.0" x="491.0" y="362.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_17" bpmnElement="BoundaryEvent_3">
         <dc:Bounds height="36.0" width="36.0" x="828.0" y="82.0"/>
@@ -465,6 +454,19 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
         <di:waypoint xsi:type="dc:Point" x="846.0" y="82.0"/>
         <di:waypoint xsi:type="dc:Point" x="846.0" y="40.0"/>
         <di:waypoint xsi:type="dc:Point" x="898.0" y="40.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="EndEvent_4">
+        <dc:Bounds height="36.0" width="36.0" x="1094.0" y="22.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="1112.0" y="63.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="SequenceFlow_20" sourceElement="_BPMNShape_UserTask_13" targetElement="_BPMNShape_EndEvent_18">
+        <di:waypoint xsi:type="dc:Point" x="998.0" y="40.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1094.0" y="40.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1016.0" y="40.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
