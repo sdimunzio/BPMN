@@ -28,10 +28,9 @@
     <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
-        </camunda:formData>
-        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+         <camunda:field name="targetTaskKey" expression="code_round_1" />
+        </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
@@ -50,10 +49,9 @@
     <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
-        </camunda:formData>
-        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create"/>
+  <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+         <camunda:field name="targetTaskKey" expression="code_round_2" />
+        </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
