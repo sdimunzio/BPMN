@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_DdZocL47EeOQo_IRkjDF6w" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
+    <bpmn2:ioSpecification id="InputOutputSpecification_1"/>
     <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Activity Coding">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
@@ -29,7 +30,7 @@
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
-         <camunda:field name="targetTaskKey"  stringValue="code_round_1" />
+          <camunda:field name="targetTaskKey" stringValue="code_round_1"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
@@ -49,8 +50,8 @@
     <bpmn2:userTask id="activity_flag_2" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
-  <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
-         <camunda:field name="targetTaskKey" stringValue="code_round_2" />
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+          <camunda:field name="targetTaskKey" stringValue="code_round_2"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
@@ -195,8 +196,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>Task Count per type</bpmn2:text>
+    <bpmn2:textAnnotation id="TextAnnotation_1">
+      <bpmn2:text><![CDATA[A listener is called when Flag Resolution is created, a field is injected to the listener with the value of the code round name that should use as target task
+- http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
@@ -441,9 +443,6 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="444.0" y="479.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_3" bpmnElement="TextAnnotation_2">
-        <dc:Bounds height="50.0" width="85.0" x="36.0" y="25.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_17" bpmnElement="BoundaryEvent_3">
         <dc:Bounds height="36.0" width="36.0" x="828.0" y="82.0"/>
       </bpmndi:BPMNShape>
@@ -468,6 +467,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
           <dc:Bounds height="6.0" width="6.0" x="1016.0" y="40.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_5" bpmnElement="TextAnnotation_1">
+        <dc:Bounds height="69.0" width="601.0" x="480.0" y="382.0"/>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
