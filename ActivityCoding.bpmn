@@ -31,6 +31,7 @@
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_1" type="string" defaultValue="code_round_1"/>
         </camunda:formData>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
@@ -52,6 +53,7 @@
         <camunda:formData>
           <camunda:formField id="code_round" label="code_round_2" type="string" defaultValue="code_round_2"/>
         </camunda:formData>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
