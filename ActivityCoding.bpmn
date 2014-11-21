@@ -203,7 +203,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:serviceTask id="autoarbitration" name="Auto Arbitration Log">
+    <bpmn2:serviceTask id="autoarbitration" camunda:class="org.aiddata.internal.workflow.delegate.coding.activity.AutoArbitrationLogDelegate" name="Auto Arbitration Log">
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
     </bpmn2:serviceTask>
