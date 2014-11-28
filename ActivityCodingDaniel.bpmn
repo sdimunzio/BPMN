@@ -12,7 +12,7 @@
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
-        <camunda:taskListener class="org.aiddata.internal.workflow.listener.RollbackTaskListener" event="complete"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
@@ -140,7 +140,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
-        <camunda:taskListener class="org.aiddata.internal.workflow.listener.RollbackTaskListener" event="complete"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
