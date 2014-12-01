@@ -14,7 +14,7 @@
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
-        	<camunda:field name="group_task_id" stringValue="1"/>
+          <camunda:field name="group_task_id" stringValue="1"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -145,7 +145,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
-        	<camunda:field name="group_task_id" stringValue="1"/>
+          <camunda:field name="group_task_id" stringValue="1"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
@@ -210,7 +210,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text><![CDATA[A listener is called when Flag Resolution task is created, a field is injected to the listener with the value of the code round name that should use as target task
+      <bpmn2:text><![CDATA[A listener is called when Activity Coding task is created.
+
+A listener is called when Flag Resolution task is created, a field is injected to the listener with the value of the code round name that should use as target task
 code_round_1
 code_round_2
 arbitration
