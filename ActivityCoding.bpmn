@@ -14,7 +14,7 @@
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
-          <camunda:field name="group_task_id" stringValue="1"/>
+          <camunda:field name="taskGroupKey" stringValue="1"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -145,7 +145,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
-          <camunda:field name="group_task_id" stringValue="1"/>
+          <camunda:field name="taskGroupKey" stringValue="1"/>
         </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
