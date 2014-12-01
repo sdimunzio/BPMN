@@ -13,6 +13,9 @@
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
+        	<camunda:field name="group_task_id" stringValue="1"/>
+        </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
@@ -141,6 +144,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
 			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
+        	<camunda:field name="group_task_id" stringValue="1"/>
+        </camunda:taskListener>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
