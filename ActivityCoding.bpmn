@@ -178,7 +178,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:userTask id="arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}" camunda:formKey="activity-coding-arbitration" name="Manual Arbitration">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
-        <camunda:taskListener class="org.aiddata.internal.workflow.listener.RollbackTaskListener" event="complete"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
