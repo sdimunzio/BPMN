@@ -190,6 +190,10 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:boundaryEvent>
     <bpmn2:userTask id="UserTask_2" camunda:formKey="flag-resolution" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding Arbitration - ${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create"/>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCompletedListener" event="complete"/>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
     </bpmn2:userTask>
