@@ -21,14 +21,14 @@
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="code_round_2" targetRef="saveAC2"/>
-    <bpmn2:boundaryEvent id="BoundaryEvent_2" name="" attachedToRef="code_round_2" cancelActivity="false">
+    <bpmn2:boundaryEvent id="code_round_2_flag_event" name="" attachedToRef="code_round_2" cancelActivity="false">
       <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_2" messageRef="Message_2"/>
     </bpmn2:boundaryEvent>
     <bpmn2:endEvent id="EndEvent_2" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="BoundaryEvent_2" targetRef="activity_flag_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="code_round_2_flag_event" targetRef="activity_flag_2"/>
     <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
@@ -184,7 +184,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="arbitration" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:boundaryEvent id="BoundaryEvent_3" name="" attachedToRef="arbitration">
+    <bpmn2:boundaryEvent id="manual_arbitration_flag_event" name="" attachedToRef="arbitration" cancelActivity="false">
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3"/>
     </bpmn2:boundaryEvent>
@@ -199,7 +199,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="BoundaryEvent_3" targetRef="UserTask_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="manual_arbitration_flag_event" targetRef="UserTask_2"/>
     <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_2" targetRef="EndEvent_4"/>
     <bpmn2:endEvent id="EndEvent_4">
       <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
@@ -441,7 +441,7 @@ arbitration
           <dc:Bounds height="6.0" width="6.0" x="452.0" y="71.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_16" bpmnElement="BoundaryEvent_2">
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_16" bpmnElement="code_round_2_flag_event">
         <dc:Bounds height="36.0" width="36.0" x="250.0" y="373.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_11" bpmnElement="activity_flag_2">
@@ -468,7 +468,7 @@ arbitration
           <dc:Bounds height="6.0" width="6.0" x="444.0" y="479.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_17" bpmnElement="BoundaryEvent_3">
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_17" bpmnElement="manual_arbitration_flag_event">
         <dc:Bounds height="36.0" width="36.0" x="828.0" y="82.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_13" bpmnElement="UserTask_2">
