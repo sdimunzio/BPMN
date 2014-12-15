@@ -87,7 +87,7 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
 
-if(code_round_1?.purpose?.code == code_round_2?.purpose?.code){
+if(code_round_1?.purpose?.code == code_round_2?.purpose?.code && code_round_1?.hasFeasibilityStudy == code_round_2?.hasFeasibilityStudy && code_round_1?.hasTechnicalAssistance == code_round_2?.hasTechnicalAssistance){
     println "Running auto arbitration..."
 
    def  arbitrated = new java.util.HashMap()
