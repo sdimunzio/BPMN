@@ -201,9 +201,6 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="manual_arbitration_flag_event" targetRef="UserTask_2"/>
     <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_2" targetRef="EndEvent_4"/>
-    <bpmn2:endEvent id="EndEvent_4">
-      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
-    </bpmn2:endEvent>
     <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
@@ -214,6 +211,9 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:endEvent>
     <bpmn2:endEvent id="EndEvent_3" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_4">
+      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:textAnnotation id="TextAnnotation_1">
       <bpmn2:text><![CDATA[A listener is called when Activity Coding task is created.
@@ -475,24 +475,27 @@ arbitration
         <dc:Bounds height="36.0" width="36.0" x="833.0" y="82.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_13" bpmnElement="UserTask_2">
-        <dc:Bounds height="80.0" width="100.0" x="903.0" y="0.0"/>
+        <dc:Bounds height="68.0" width="100.0" x="903.0" y="12.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_21" sourceElement="_BPMNShape_BoundaryEvent_17" targetElement="_BPMNShape_UserTask_13">
         <di:waypoint xsi:type="dc:Point" x="851.0" y="82.0"/>
-        <di:waypoint xsi:type="dc:Point" x="851.0" y="40.0"/>
-        <di:waypoint xsi:type="dc:Point" x="903.0" y="40.0"/>
+        <di:waypoint xsi:type="dc:Point" x="851.0" y="46.0"/>
+        <di:waypoint xsi:type="dc:Point" x="903.0" y="46.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="859.0" y="46.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="EndEvent_4">
-        <dc:Bounds height="36.0" width="36.0" x="1099.0" y="22.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="1068.0" y="28.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1117.0" y="63.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1086.0" y="69.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="SequenceFlow_20" sourceElement="_BPMNShape_UserTask_13" targetElement="_BPMNShape_EndEvent_18">
-        <di:waypoint xsi:type="dc:Point" x="1003.0" y="40.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1099.0" y="40.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1003.0" y="46.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1068.0" y="46.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1021.0" y="40.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="1021.0" y="46.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_5" bpmnElement="TextAnnotation_1">
