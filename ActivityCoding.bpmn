@@ -188,7 +188,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3"/>
     </bpmn2:boundaryEvent>
-    <bpmn2:userTask id="UserTask_2" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" name="Flag Resolution">
+    <bpmn2:userTask id="UserTask_2" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" name="Flag Resolution">
       <bpmn2:documentation>Activity Coding Arbitration - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
@@ -226,7 +226,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.1 dev</bpmn2:text>
+      <bpmn2:text>v.2 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
