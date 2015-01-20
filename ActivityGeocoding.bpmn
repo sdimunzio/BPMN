@@ -110,7 +110,7 @@ def isAuto = true
 if(geoLocations1.size() == geoLocations2.size()){
 	println "Location size is the same"
 		
-	for (int i = 0; i < geocodingList1.size() && isAuto == true; i++) {
+	for (int i = 0; i < geoLocations1.size() && isAuto == true; i++) {
 		def flag = false
 		for (int j = 0; j < geoLocations2.size(); j++) {
 			if(geoLocations1.get(i).getId() == geoLocations2.get(j).getId()){
@@ -211,7 +211,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.2 dev</bpmn2:text>
+      <bpmn2:text>v.1.1 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
