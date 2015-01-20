@@ -101,7 +101,7 @@
     <bpmn2:scriptTask id="autoarbritration_script" name="Auto Arbitration" scriptFormat="groovy">
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
-      <bpmn2:script><![CDATA[println "-------------Geo Autoarbitration time---------------"
+      <bpmn2:script><![CDATA[println "-------------Geocoding - Autoarbitration time---------------"
 
 java.util.List geoLocations1 = (java.util.List) code_round_1?.geocoding
 java.util.List geoLocations2 = (java.util.List) code_round_2?.geocoding
@@ -112,15 +112,9 @@ if(geoLocations1.size() == geoLocations2.size()){
 		
 	for (int i = 0; i < geoLocations1.size() && isAuto == true; i++) {
 		def flag = false
-		org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding1 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations1.get(i)
-		println "geoCoding1: "	+ geoCoding1	
-		
+		org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding1 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations1.get(i)		
 		for (int j = 0; j < geoLocations2.size(); j++) {
-			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)	
-			println "geoCoding2: "	+ geoCoding2	
-			
-			println "geoCoding2?.id: "	+ geoCoding2?.id	
-			
+			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)			
 			if(geoCoding1?.id == geoCoding2?.id){
 				flag = true
 			}
@@ -134,7 +128,7 @@ if(geoLocations1.size() == geoLocations2.size()){
 }
 
 if(isAuto){
-    println "Running geo auto arbitration..."
+    println "Geocoding - Running auto arbitration..."
 
     def  arbitrated = new java.util.HashMap()
 	
@@ -148,10 +142,10 @@ if(isAuto){
     execution.setVariable("arbitration",arbitrated);
     execution.setVariable("isAuto","true");
 
-    println "Running geo auto arbitration done!"
+    println "Geocoding - Running auto arbitration done!"
 
 } else {
-    println "Cant arbitrate this one..."
+    println "Geocoding - Cant arbitrate this one..."
 }
 println "-------------bye Geo Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:scriptTask>
@@ -171,7 +165,7 @@ println "-------------bye Geo Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_25" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_1"/>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoGeocodingUpdaterDelegate" name="Save Task">
       <bpmn2:incoming>SequenceFlow_25</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -219,7 +213,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.1.3 dev</bpmn2:text>
+      <bpmn2:text>v.1.1 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
