@@ -112,8 +112,10 @@ if(geoLocations1.size() == geoLocations2.size()){
 		
 	for (int i = 0; i < geoLocations1.size() && isAuto == true; i++) {
 		def flag = false
+		java.util.List geoCoding1 = (java.util.List) geoLocations1.get(i)
 		for (int j = 0; j < geoLocations2.size(); j++) {
-			if(geoLocations1.get(i).getId() == geoLocations2.get(j).getId()){
+			java.util.List geoCoding2 = (java.util.List) geoLocations2.get(j)			
+			if(geoCoding1?.id == geoCoding2?.id){
 				flag = true
 			}
 		}
@@ -211,7 +213,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.1.1 dev</bpmn2:text>
+      <bpmn2:text>v.1.2 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
