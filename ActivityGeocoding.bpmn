@@ -103,20 +103,35 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Geo Autoarbitration time---------------"
 
-if(code_round_1?.purpose?.code == code_round_2?.purpose?.code && code_round_1?.hasFeasibilityStudy == code_round_2?.hasFeasibilityStudy && code_round_1?.hasTechnicalAssistance == code_round_2?.hasTechnicalAssistance){
-    println "Running auto arbitration..."
+java.util.List geoLocations1 = (java.util.List) code_round_1?.geocoding
+java.util.List geoLocations2 = (java.util.List) code_round_2?.geocoding
 
-   def  arbitrated = new java.util.HashMap()
-    java.util.Set activities = new java.util.HashSet()
+def isAuto = true
+if(geoLocations1.size() == geoLocations2.size()){
+	println "Location size is the same"
+		
+	for (int i = 0; i < geocodingList1.size() && isAuto == true; i++) {
+		def flag = false
+		for (int j = 0; j < geoLocations2.size(); j++) {
+			if(geoLocations1.get(i).getId() == geoLocations2.get(j).getId()){
+				flag = true
+			}
+		}
+		isAuto = flag
+	}
 	
-    arbitrated.project=code_round_1?.project
-    arbitrated.purpose=code_round_1?.purpose
-    arbitrated.hasFeasibilityStudy=code_round_1?.hasFeasibilityStudy
-    arbitrated.hasTechnicalAssistance=code_round_1?.hasTechnicalAssistance
-    activities.addAll(code_round_1?.activities)
-    activities.addAll(code_round_2?.activities)
-   
-    arbitrated.activities=activities
+} else {
+	println "Location size is different"
+	isAuto = false
+}
+
+if(isAuto){
+    println "Running geo auto arbitration..."
+
+    def  arbitrated = new java.util.HashMap()
+	
+	arbitrated.code_round=code_round_1
+    
     arbitrated.created=new Date()
     arbitrated.coder=null
     arbitrated.level=org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL
@@ -143,8 +158,8 @@ println "-------------bye Geo Autoarbitration ---------------"]]></bpmn2:script>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_15" name="auto" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
-      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_25" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_1"/>
@@ -196,7 +211,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.1 dev</bpmn2:text>
+      <bpmn2:text>v.2 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
