@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_DdZocL47EeOQo_IRkjDF6w" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
+    <bpmn2:endEvent id="EndEvent_2" name="End Flagging">
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:userTask id="activity_flag_1" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}" camunda:formKey="flag-resolution" name="Flag Resolution">
+      <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+          <camunda:field name="targetTaskKey" stringValue="code_round_1"/>
+        </camunda:taskListener>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCompletedListener" event="complete"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="activity_flag_1" targetRef="EndEvent_2"/>
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate" name="Save Task">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:boundaryEvent id="code_round_1_flag_event" attachedToRef="arbitration" cancelActivity="false">
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="code_round_1_flag_event" targetRef="activity_flag_1"/>
+    <bpmn2:userTask id="arbitration" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}" camunda:formKey="activity-coding" name="Generic Activity Coding">
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:inputOutput><![CDATA[
+			]]><camunda:inputParameter name="Locale">en-UK</camunda:inputParameter><![CDATA[
+			]]><camunda:inputParameter name="TaskName">Activity Coding</camunda:inputParameter><![CDATA[
+			]]><camunda:inputParameter name="Skippable">false</camunda:inputParameter><![CDATA[
+			]]><camunda:inputParameter name="GroupId">ROLE_ACTIVITY_CODER</camunda:inputParameter><![CDATA[
+			]]><camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter><![CDATA[
+			]]><camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter><![CDATA[
+		]]></camunda:inputOutput>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
+        <camunda:formData>
+          <camunda:formField id="id" type="long"/>
+          <camunda:formField id="name" type="string"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:startEvent id="StartEvent_1" name="Activity Coding &#xD;&#xA;Start Event">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="arbitration"/>
+    <bpmn2:endEvent id="EndEvent_1" name="End &#xD;&#xA;Activity Coding&#xD;&#xA;">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="arbitration" targetRef="ServiceTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:textAnnotation id="TextAnnotation_1">
+      <bpmn2:text>Activity Coding - Single Task Model v1</bpmn2:text>
+    </bpmn2:textAnnotation>
+  </bpmn2:process>
+  <bpmn2:message id="Message_1" name="code_round_1"/>
+  <bpmn2:message id="Message_2" name="code_round_2"/>
+  <bpmn2:message id="Message_3" name="arbitration"/>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ActivityCoding">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="48.0" y="178.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="38.0" width="106.0" x="24.0" y="233.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="arbitration">
+        <dc:Bounds height="80.0" width="100.0" x="168.0" y="156.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="624.0" y="178.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="38.0" width="102.0" x="591.0" y="233.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_3" bpmnElement="ServiceTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="434.0" y="156.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_15" bpmnElement="code_round_1_flag_event">
+        <dc:Bounds height="36.0" width="36.0" x="250.0" y="138.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="268.0" y="179.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_10" bpmnElement="activity_flag_1">
+        <dc:Bounds height="61.0" width="100.0" x="324.0" y="45.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_BoundaryEvent_15" targetElement="_BPMNShape_UserTask_10">
+        <di:waypoint xsi:type="dc:Point" x="268.0" y="138.0"/>
+        <di:waypoint xsi:type="dc:Point" x="268.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="324.0" y="75.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="265.0" y="83.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_16" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="466.0" y="58.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="484.0" y="99.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_UserTask_10" targetElement="_BPMNShape_EndEvent_16">
+        <di:waypoint xsi:type="dc:Point" x="424.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="452.0" y="75.0"/>
+        <di:waypoint xsi:type="dc:Point" x="452.0" y="76.0"/>
+        <di:waypoint xsi:type="dc:Point" x="466.0" y="76.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="452.0" y="76.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_UserTask_3">
+        <di:waypoint xsi:type="dc:Point" x="84.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="168.0" y="196.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="130.0" y="196.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_3" targetElement="_BPMNShape_ServiceTask_3">
+        <di:waypoint xsi:type="dc:Point" x="268.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="434.0" y="196.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ServiceTask_3" targetElement="_BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="534.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="624.0" y="196.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_7" bpmnElement="TextAnnotation_1">
+        <dc:Bounds height="50.0" width="276.0" x="1.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
