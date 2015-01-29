@@ -38,8 +38,8 @@
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:formData>
-          <camunda:formField id="id" type="long"/>
-          <camunda:formField id="name" type="string"/>
+          <camunda:formField id="id" label="id" type="long"/>
+          <camunda:formField id="name" label="name" type="string"/>
         </camunda:formData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -55,7 +55,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="arbitration" targetRef="ServiceTask_1"/>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
     <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text>Activity Coding - Single Task Model v1</bpmn2:text>
+      <bpmn2:text>Activity Coding - Generic Task Model v1</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
