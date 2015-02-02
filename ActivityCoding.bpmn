@@ -86,8 +86,9 @@
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
-def cr1 = grails.converters.JSON.parse(code_round_1)
-def cr2 = grails.converters.JSON.parse(code_round_2)
+com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+java.util.Map<String, Object> cr1 = mapper.readValue(code_round_1, new com.fasterxml.jackson.core.type.TypeReferenceTypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+java.util.Map<String, Object> cr2 = mapper.readValue(code_round_2, new com.fasterxml.jackson.core.type.TypeReferenceTypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
 
 if(cr1?.purpose?.code == cr2?.purpose?.code && cr1?.hasFeasibilityStudy == cr2?.hasFeasibilityStudy && cr1?.hasTechnicalAssistance == cr2?.hasTechnicalAssistance){
     println "Running auto arbitration..."
@@ -228,7 +229,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.2 dev</bpmn2:text>
+      <bpmn2:text>v.3 dev</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
