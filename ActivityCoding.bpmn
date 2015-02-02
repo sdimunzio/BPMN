@@ -86,19 +86,21 @@
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
+def cr1 = grails.converters.JSON.parse(code_round_1)
+def cr2 = grails.converters.JSON.parse(code_round_2)
 
-if(code_round_1?.purpose?.code == code_round_2?.purpose?.code && code_round_1?.hasFeasibilityStudy == code_round_2?.hasFeasibilityStudy && code_round_1?.hasTechnicalAssistance == code_round_2?.hasTechnicalAssistance){
+if(cr1?.purpose?.code == cr2?.purpose?.code && cr1?.hasFeasibilityStudy == cr2?.hasFeasibilityStudy && cr1?.hasTechnicalAssistance == cr2?.hasTechnicalAssistance){
     println "Running auto arbitration..."
 
    def  arbitrated = new java.util.HashMap()
     java.util.Set activities = new java.util.HashSet()
 	
-    arbitrated.project=code_round_1?.project
-    arbitrated.purpose=code_round_1?.purpose
-    arbitrated.hasFeasibilityStudy=code_round_1?.hasFeasibilityStudy
-    arbitrated.hasTechnicalAssistance=code_round_1?.hasTechnicalAssistance
-    activities.addAll(code_round_1?.activities)
-    activities.addAll(code_round_2?.activities)
+    arbitrated.project=cr1?.project
+    arbitrated.purpose=cr1?.purpose
+    arbitrated.hasFeasibilityStudy=cr1?.hasFeasibilityStudy
+    arbitrated.hasTechnicalAssistance=cr1?.hasTechnicalAssistance
+    activities.addAll(cr1?.activities)
+    activities.addAll(cr2?.activities)
    
     arbitrated.activities=activities
     arbitrated.created=new Date()
