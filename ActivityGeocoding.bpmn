@@ -102,9 +102,12 @@
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Geocoding - Autoarbitration time---------------"
+com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+java.util.Map<String, Object> cr1 = mapper.readValue(code_round_1, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+java.util.Map<String, Object> cr2 = mapper.readValue(code_round_2, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
 
-java.util.List geoLocations1 = (java.util.List) code_round_1?.geocoding
-java.util.List geoLocations2 = (java.util.List) code_round_2?.geocoding
+java.util.List geoLocations1 = (java.util.List) cr1?.geocoding
+java.util.List geoLocations2 = (java.util.List) cr2?.geocoding
 
 def isAuto = true
 if(geoLocations1.size() == geoLocations2.size()){
@@ -132,7 +135,7 @@ if(isAuto){
 
     def  arbitrated = new java.util.HashMap()
 	
-	arbitrated.code_round=code_round_1
+	arbitrated.code_round=cr1
     
     arbitrated.created=new Date()
     arbitrated.coder=null
