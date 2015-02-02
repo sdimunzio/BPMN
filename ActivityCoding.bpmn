@@ -87,8 +87,8 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
       <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
 com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-java.util.Map<String, Object> cr1 = mapper.readValue(code_round_1, new com.fasterxml.jackson.core.type.TypeReferenceTypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
-java.util.Map<String, Object> cr2 = mapper.readValue(code_round_2, new com.fasterxml.jackson.core.type.TypeReferenceTypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+java.util.Map<String, Object> cr1 = mapper.readValue(code_round_1, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+java.util.Map<String, Object> cr2 = mapper.readValue(code_round_2, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
 
 if(cr1?.purpose?.code == cr2?.purpose?.code && cr1?.hasFeasibilityStudy == cr2?.hasFeasibilityStudy && cr1?.hasTechnicalAssistance == cr2?.hasTechnicalAssistance){
     println "Running auto arbitration..."
@@ -229,7 +229,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.3 dev</bpmn2:text>
+      <bpmn2:text>v.2 dev (Json changes)</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
@@ -240,7 +240,7 @@ arbitration
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="17.0" y="245.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="102.0" x="5.0" y="286.0"/>
+          <dc:Bounds height="38.0" width="102.0" x="-60.0" y="292.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="code_round_1">
@@ -505,7 +505,7 @@ arbitration
         <dc:Bounds height="139.0" width="601.0" x="751.0" y="395.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_6" bpmnElement="TextAnnotation_2">
-        <dc:Bounds height="50.0" width="50.0" x="0.0" y="1.0"/>
+        <dc:Bounds height="50.0" width="145.0" x="0.0" y="1.0"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
