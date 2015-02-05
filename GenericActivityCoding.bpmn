@@ -34,10 +34,9 @@
 		]]></camunda:inputOutput>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete"/>
         <camunda:formData>
-          <camunda:formField id="id" label="Id" type="long"/>
-          <camunda:formField id="name" label="Name" type="string"/>
-          <camunda:formField id="date" label="Date" type="date"/>
-          <camunda:formField id="boolean" label="Boolean" type="boolean"/>
+          <camunda:formField id="id" label="Translation Id" type="long"/>
+          <camunda:formField id="name" label="Translation Name" type="string"/>
+          <camunda:formField id="algo" label="Algo" type="string"/>
         </camunda:formData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
