@@ -229,7 +229,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.2 dev (Json changes)</bpmn2:text>
+      <bpmn2:text>Activity Coding - Task Model v.3</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
@@ -505,7 +505,7 @@ arbitration
         <dc:Bounds height="139.0" width="601.0" x="751.0" y="395.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_6" bpmnElement="TextAnnotation_2">
-        <dc:Bounds height="50.0" width="145.0" x="0.0" y="1.0"/>
+        <dc:Bounds height="50.0" width="229.0" x="0.0" y="1.0"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

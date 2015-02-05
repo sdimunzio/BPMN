@@ -216,7 +216,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>v.1.1 dev</bpmn2:text>
+      <bpmn2:text>GeoCoding - Task Model v3</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
@@ -432,7 +432,7 @@ arbitration
         <dc:Bounds height="139.0" width="426.0" x="751.0" y="395.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_6" bpmnElement="TextAnnotation_2">
-        <dc:Bounds height="50.0" width="50.0" x="0.0" y="1.0"/>
+        <dc:Bounds height="50.0" width="193.0" x="0.0" y="1.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="SequenceFlow_23" sourceElement="_BPMNShape_UserTask_4" targetElement="_BPMNShape_ParallelGateway_3">
         <di:waypoint xsi:type="dc:Point" x="273.0" y="351.0"/>

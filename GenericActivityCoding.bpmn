@@ -52,7 +52,7 @@
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="arbitration" targetRef="EndEvent_1"/>
     <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text>Activity Coding - Generic Task Model v.2</bpmn2:text>
+      <bpmn2:text>Activity Coding - Generic Task Model v.3</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
