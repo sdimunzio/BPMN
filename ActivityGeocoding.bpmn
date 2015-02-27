@@ -115,10 +115,13 @@ if(geoLocations1.size() == geoLocations2.size()){
 		
 	for (int i = 0; i < geoLocations1.size() && isAuto == true; i++) {
 		def flag = false
-		println "Location False"
 		org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding1 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations1.get(i)		
 		for (int j = 0; j < geoLocations2.size(); j++) {
-			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)			
+			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)
+			println "geoCoding1?.id: " + geoCoding1?.id
+			println "geoCoding2?.id: " + geoCoding2?.id
+			println "geoCoding1?.id == geoCoding2?.id: " + geoCoding1?.id == geoCoding2?.id
+			
 			if(geoCoding1?.id == geoCoding2?.id){
 				flag = true
 				println "Location True"
@@ -126,12 +129,10 @@ if(geoLocations1.size() == geoLocations2.size()){
 		}
 		isAuto = flag
 	}
-	
 } else {
 	println "Location size is different"
 	isAuto = false
 }
-println "isAuto: "+isAuto
 if(isAuto){
     println "Geocoding - Running auto arbitration..."
 
