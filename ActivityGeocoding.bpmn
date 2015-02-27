@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_DdZocL47EeOQo_IRkjDF6w" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
-  <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
-    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_GEOCODING_CODER" camunda:priority="${priority}" camunda:formKey="activity-geocoding" name="Activity Geocoding">
+  <bpmn2:process id="GeoCoding" name="GeoCoding" isExecutable="true">
+    <bpmn2:userTask id="code_round_2" camunda:candidateGroups="ROLE_GEOCODING_CODER" camunda:priority="${priority}" camunda:formKey="activity-geocoding" name="Geocoding">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
@@ -45,7 +45,7 @@
       <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="code_round_1_flag_event" targetRef="activity_flag_1"/>
-    <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_GEOCODING_CODER" camunda:priority="${priority}" camunda:formKey="activity-geocoding" name="Activity Geocoding">
+    <bpmn2:userTask id="code_round_1" camunda:candidateGroups="ROLE_GEOCODING_CODER" camunda:priority="${priority}" camunda:formKey="activity-geocoding" name="Geocoding">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput><![CDATA[
@@ -206,7 +206,7 @@ println "-------------bye Geo Autoarbitration ---------------"]]></bpmn2:script>
     <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_2" targetRef="EndEvent_4"/>
     <bpmn2:sequenceFlow id="SequenceFlow_26" name="" sourceRef="manual_arbitration_flag_event" targetRef="UserTask_2"/>
     <bpmn2:textAnnotation id="TextAnnotation_1">
-      <bpmn2:text><![CDATA[A listener is called when Activity Geocoding task is created.
+      <bpmn2:text><![CDATA[A listener is called when GeoCoding task is created.
 
 A listener is called when Flag Resolution task is created, a field is injected to the listener with the value of the code round name that should use as target task
 code_round_1
@@ -223,7 +223,7 @@ arbitration
   <bpmn2:message id="Message_2" name="code_round_2"/>
   <bpmn2:message id="Message_3" name="arbitration"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ActivityCoding">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="GeoCoding">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="16.0" y="248.0"/>
         <bpmndi:BPMNLabel>
