@@ -118,13 +118,10 @@ if(geoLocations1.size() == geoLocations2.size()){
 		org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding1 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations1.get(i)		
 		for (int j = 0; j < geoLocations2.size(); j++) {
 			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)
-			println "geoCoding1?.id: " + geoCoding1?.id
-			println "geoCoding2?.id: " + geoCoding2?.id
-			println "geoCoding1?.id == geoCoding2?.id: " + geoCoding1?.id == geoCoding2?.id
 			
-			if(geoCoding1?.id == geoCoding2?.id){
+			if(geoCoding1?.location_id == geoCoding2?.location_id && geoCoding1?.adm1?.name==geoCoding2?.adm1?.name && geoCoding1?.adm2?.name==geoCoding2?.adm2?.name && geoCoding1?.name == geoCoding2?.name && geoCoding1?.geometry?.coordinates.get(0)==geoCoding2?.geometry?.coordinates.get(0) && geoCoding1?.geometry?.coordinates.get(1)==geoCoding2?.geometry?.coordinates.get(1) && geoCoding1?.location_class?.code==geoCoding2?.location_class?.code){
 				flag = true
-				println "Location True"
+				println "--- Location Match! ---"
 			}
 		}
 		isAuto = flag
@@ -219,8 +216,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text><![CDATA[GeoCoding - Task Model v3
-Log enabled]]></bpmn2:text>
+      <bpmn2:text>GeoCoding - Task Model v4</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
