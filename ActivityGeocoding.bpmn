@@ -119,7 +119,7 @@ if(geoLocations1.size() == geoLocations2.size()){
 		for (int j = 0; j < geoLocations2.size(); j++) {
 			org.aiddata.internal.common.model.request.GeoLocationRequest geoCoding2 = (org.aiddata.internal.common.model.request.GeoLocationRequest) geoLocations2.get(j)
 			
-			if(geoCoding1?.location_id == geoCoding2?.location_id && geoCoding1?.adm1?.name==geoCoding2?.adm1?.name && geoCoding1?.adm2?.name==geoCoding2?.adm2?.name && geoCoding1?.name == geoCoding2?.name && geoCoding1?.geometry?.coordinates.get(0)==geoCoding2?.geometry?.coordinates.get(0) && geoCoding1?.geometry?.coordinates.get(1)==geoCoding2?.geometry?.coordinates.get(1) && geoCoding1?.location_class?.code==geoCoding2?.location_class?.code){
+			if(geoCoding1?.location_id == geoCoding2?.location_id && geoCoding1?.adm1?.name==geoCoding2?.adm1?.name && geoCoding1?.adm2?.name==geoCoding2?.adm2?.name && geoCoding1?.name == geoCoding2?.name && geoCoding1?.geometry?.coordinates.get(0)==geoCoding2?.geometry?.coordinates.get(0) && geoCoding1?.geometry?.coordinates.get(1)==geoCoding2?.geometry?.coordinates.get(1) && geoCoding1?.location_class?.code==geoCoding2?.location_class?.code && geoCoding1?.supporting_information?.code==geoCoding2?.supporting_information?.code){
 				flag = true
 				println "--- Location Match! ---"
 			}
@@ -218,7 +218,7 @@ arbitration
 - http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:textAnnotation id="TextAnnotation_2">
-      <bpmn2:text>GeoCoding - Task Model v5</bpmn2:text>
+      <bpmn2:text>GeoCoding - Task Model v6</bpmn2:text>
     </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="code_round_1"/>
