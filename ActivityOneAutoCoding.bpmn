@@ -4,7 +4,7 @@
     <bpmn2:endEvent id="EndEvent_2" name="End Flagging">
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:userTask id="activity_flag_1" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="NaN">
+    <bpmn2:userTask id="activity_flag_1" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}">
       <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
@@ -25,7 +25,7 @@
       <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1" />
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="code_round_1_flag_event" targetRef="activity_flag_1" />
-    <bpmn2:userTask id="code_round_1" name="Activity Coding" camunda:formKey="activity-coding" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="NaN">
+    <bpmn2:userTask id="code_round_1" name="Activity Coding" camunda:formKey="activity-coding" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="${priority}">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:inputOutput>
@@ -109,7 +109,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3" />
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="manual_arbitration_flag_event" targetRef="UserTask_2" />
-    <bpmn2:userTask id="UserTask_2" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="NaN">
+    <bpmn2:userTask id="UserTask_2" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="${priority}">
       <bpmn2:documentation>Activity Coding Arbitration - ${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
@@ -132,7 +132,7 @@ println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
-    <bpmn2:userTask id="arbitration" name="Manual Arbitration" camunda:formKey="activity-coding-arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="NaN">
+    <bpmn2:userTask id="arbitration" name="Manual Arbitration" camunda:formKey="activity-coding-arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="${priority}">
       <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
       <bpmn2:extensionElements>
         <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete" />
