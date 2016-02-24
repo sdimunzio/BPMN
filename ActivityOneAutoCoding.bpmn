@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_DdZocL47EeOQo_IRkjDF6w" targetNamespace="http://activiti.org/bpmn" exporter="camunda modeler" exporterVersion="2.5.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="ActivityCoding" name="ActivityCoding" isExecutable="true">
+    <bpmn2:endEvent id="EndEvent_2" name="End Flagging">
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:userTask id="activity_flag_1" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="NaN">
+      <bpmn2:documentation>Activity Coding - ${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+          <camunda:field name="targetTaskKey" stringValue="code_round_1" />
+        </camunda:taskListener>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCompletedListener" event="complete" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="activity_flag_1" targetRef="EndEvent_2" />
+    <bpmn2:startEvent id="StartEvent_1" name="ActivityCoding &#10;Start Event">
+      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="StartEvent_1" targetRef="ParallelGateway_1" />
+    <bpmn2:boundaryEvent id="code_round_1_flag_event" cancelActivity="false" attachedToRef="code_round_1">
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1" />
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="code_round_1_flag_event" targetRef="activity_flag_1" />
+    <bpmn2:userTask id="code_round_1" name="Activity Coding" camunda:formKey="activity-coding" camunda:candidateGroups="ROLE_ACTIVITY_CODER" camunda:priority="NaN">
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Locale">en-UK</camunda:inputParameter>
+          <camunda:inputParameter name="TaskName">Activity Coding</camunda:inputParameter>
+          <camunda:inputParameter name="Skippable">false</camunda:inputParameter>
+          <camunda:inputParameter name="GroupId">ROLE_ACTIVITY_CODER</camunda:inputParameter>
+          <camunda:inputParameter name="ui-path">activity-coding</camunda:inputParameter>
+          <camunda:inputParameter name="NodeName">Activity Coding</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete" />
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.ParallelGroupRestorePointListener" event="create">
+          <camunda:field name="taskGroupKey" stringValue="1" />
+        </camunda:taskListener>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:parallelGateway id="ParallelGateway_1" name="Task&#10;Splitter">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_0e2fzk0</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ParallelGateway_1" targetRef="code_round_1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_23" name="" sourceRef="code_round_1" targetRef="ParallelGateway_2" />
+    <bpmn2:scriptTask id="autoarbritration_script" name="Auto Arbitration" scriptFormat="groovy">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+      <bpmn2:script><![CDATA[println "-------------Autoarbitration time---------------"
+com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+java.util.Map<String, Object> cr1 = mapper.readValue(code_round_1, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+java.util.Map<String, Object> cr2 = mapper.readValue(code_round_2, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<java.lang.String, java.lang.Object>>(){});
+
+if(cr1?.purpose?.code == cr2?.purpose?.code && cr1?.hasFeasibilityStudy == cr2?.hasFeasibilityStudy && cr1?.hasTechnicalAssistance == cr2?.hasTechnicalAssistance){
+    println "Running auto arbitration..."
+
+   def  arbitrated = new java.util.HashMap()
+    java.util.Set activities = new java.util.HashSet()
+	
+    arbitrated.project=cr1?.project
+    arbitrated.purpose=cr1?.purpose
+    arbitrated.hasFeasibilityStudy=cr1?.hasFeasibilityStudy
+    arbitrated.hasTechnicalAssistance=cr1?.hasTechnicalAssistance
+    activities.addAll(cr1?.activities)
+    activities.addAll(cr2?.activities)
+   
+    arbitrated.activities=activities
+    arbitrated.created=new Date()
+    arbitrated.coder=null
+    arbitrated.level=org.aiddata.internal.common.model.coding.CodeRound.ARBITRATION_LEVEL
+    arbitrated.autoCreated=true
+	      
+    execution.setVariable("arbitration",arbitrated);
+    execution.setVariable("isAuto","true");
+
+    println "Running auto arbitration done!"
+
+} else {
+    println "Cant arbitrate this one..."
+}
+println "-------------bye Autoarbitration ---------------"]]></bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="autoarbritration_script" targetRef="ExclusiveGateway_1" />
+    <bpmn2:parallelGateway id="ParallelGateway_2" name="Task&#10;Join">
+      <bpmn2:incoming>SequenceFlow_23</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_105f7k0</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ParallelGateway_2" targetRef="autoarbritration_script" />
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="SequenceFlow_15">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="manual" sourceRef="ExclusiveGateway_1" targetRef="arbitration">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${execution.getVariable("isAuto")==null}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" name="auto" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2" />
+    <bpmn2:boundaryEvent id="manual_arbitration_flag_event" name="" cancelActivity="false" attachedToRef="arbitration">
+      <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_3" messageRef="Message_3" />
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_21" name="" sourceRef="manual_arbitration_flag_event" targetRef="UserTask_2" />
+    <bpmn2:userTask id="UserTask_2" name="Flag Resolution" camunda:formKey="flag-resolution" camunda:candidateGroups="ROLE_ACTIVITY_FLAG_RESOLVER" camunda:priority="NaN">
+      <bpmn2:documentation>Activity Coding Arbitration - ${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCreatedListener" event="create">
+          <camunda:field name="targetTaskKey" stringValue="arbitration" />
+        </camunda:taskListener>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.FlagResolutionCompletedListener" event="complete" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_2" targetRef="EndEvent_4" />
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_24</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_24" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_1" />
+    <bpmn2:serviceTask id="ServiceTask_1" name="Save Task" camunda:class="org.aiddata.internal.workflow.delegate.MongoUpdaterDelegate">
+      <bpmn2:incoming>SequenceFlow_24</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_17" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
+    <bpmn2:userTask id="arbitration" name="Manual Arbitration" camunda:formKey="activity-coding-arbitration" camunda:candidateGroups="ROLE_ACTIVITY_ARBITRATOR" camunda:priority="NaN">
+      <bpmn2:documentation>${project_id} - ${project_title}</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:taskListener class="org.aiddata.internal.workflow.delegate.RollbackTaskListener" event="complete" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="arbitration" targetRef="ExclusiveGateway_2" />
+    <bpmn2:endEvent id="EndEvent_1" name="End ">
+      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_4">
+      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="ServiceTask_2" name="Auto Activity Coding" camunda:class="org.aiddata.internal.workflow.delegate.RoboCodingDelegate">
+      <bpmn2:incoming>SequenceFlow_0e2fzk0</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_105f7k0</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_0e2fzk0" sourceRef="ParallelGateway_1" targetRef="ServiceTask_2" />
+    <bpmn2:sequenceFlow id="SequenceFlow_105f7k0" sourceRef="ServiceTask_2" targetRef="ParallelGateway_2" />
+    <bpmn2:textAnnotation id="TextAnnotation_1">    <bpmn2:text><![CDATA[A listener is called when Activity Coding task is created.
+
+A listener is called when Flag Resolution task is created, a field is injected to the listener with the value of the code round name that should use as target task
+code_round_1
+code_round_2
+arbitration
+
+- http://docs.camunda.org/latest/guides/user-guide/#process-engine-delegation-code-task-listener]]></bpmn2:text>
+</bpmn2:textAnnotation>
+    <bpmn2:textAnnotation id="TextAnnotation_2">    <bpmn2:text>Activity Coding - Task Model v4</bpmn2:text>
+</bpmn2:textAnnotation>
+  </bpmn2:process>
+  <bpmn2:message id="Message_1" name="code_round_1" />
+  <bpmn2:message id="Message_2" name="code_round_2" />
+  <bpmn2:message id="Message_3" name="arbitration" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ActivityCoding">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds x="65" y="245" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-12" y="292" width="102" height="38" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="code_round_1">
+        <dc:Bounds x="221" y="148" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_2" bpmnElement="ParallelGateway_1">
+        <dc:Bounds x="146" y="238" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="196" y="244" width="47" height="38" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_ParallelGateway_2" targetElement="_BPMNShape_UserTask_3">
+        <di:waypoint xsi:type="dc:Point" x="171" y="238" />
+        <di:waypoint xsi:type="dc:Point" x="171" y="215" />
+        <di:waypoint xsi:type="dc:Point" x="171" y="188" />
+        <di:waypoint xsi:type="dc:Point" x="221" y="188" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="168" y="328" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ScriptTask_2" bpmnElement="autoarbritration_script">
+        <dc:Bounds x="476" y="223" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_3" bpmnElement="ParallelGateway_2">
+        <dc:Bounds x="383" y="238" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="341" y="244" width="44" height="38" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_ParallelGateway_3" targetElement="_BPMNShape_ScriptTask_2">
+        <di:waypoint xsi:type="dc:Point" x="433" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="476" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="452" y="263" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1070" y="245" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1072" y="286" width="33" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ScriptTask_2" targetElement="_BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="576" y="264" />
+        <di:waypoint xsi:type="dc:Point" x="597" y="264" />
+        <di:waypoint xsi:type="dc:Point" x="597" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="624" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="577" y="265" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds x="624" y="238" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="649" y="293" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_7" bpmnElement="arbitration">
+        <dc:Bounds x="688" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_UserTask_7">
+        <di:waypoint xsi:type="dc:Point" x="649" y="238" />
+        <di:waypoint xsi:type="dc:Point" x="649" y="140" />
+        <di:waypoint xsi:type="dc:Point" x="688" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="603" y="152" width="48" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_6" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
+        <dc:Bounds x="787" y="238" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="812" y="293" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="_BPMNShape_UserTask_7" targetElement="_BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="788" y="140" />
+        <di:waypoint xsi:type="dc:Point" x="812" y="140" />
+        <di:waypoint xsi:type="dc:Point" x="812" y="238" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="757" y="183" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_15" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_ExclusiveGateway_6">
+        <di:waypoint xsi:type="dc:Point" x="674" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="787" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="558" y="263" width="31" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_ParallelGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="101" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="133" y="264" />
+        <di:waypoint xsi:type="dc:Point" x="133" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="146" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="380" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_3" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="911" y="223" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_17" sourceElement="_BPMNShape_ServiceTask_3" targetElement="_BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="1011" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="1070" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="906" y="263" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_15" bpmnElement="code_round_1_flag_event">
+        <dc:Bounds x="303" y="130" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="318" y="171" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_10" bpmnElement="activity_flag_1">
+        <dc:Bounds x="377" y="40" width="100" height="61" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_BoundaryEvent_15" targetElement="_BPMNShape_UserTask_10">
+        <di:waypoint xsi:type="dc:Point" x="321" y="130" />
+        <di:waypoint xsi:type="dc:Point" x="321" y="70" />
+        <di:waypoint xsi:type="dc:Point" x="377" y="70" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="318" y="75" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_16" bpmnElement="EndEvent_2">
+        <dc:Bounds x="519" y="53" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="537" y="94" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_UserTask_10" targetElement="_BPMNShape_EndEvent_16">
+        <di:waypoint xsi:type="dc:Point" x="477" y="70" />
+        <di:waypoint xsi:type="dc:Point" x="505" y="70" />
+        <di:waypoint xsi:type="dc:Point" x="505" y="71" />
+        <di:waypoint xsi:type="dc:Point" x="519" y="71" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="505" y="71" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_17" bpmnElement="manual_arbitration_flag_event">
+        <dc:Bounds x="770" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="123" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_13" bpmnElement="UserTask_2">
+        <dc:Bounds x="840" y="12" width="100" height="68" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_21" sourceElement="_BPMNShape_BoundaryEvent_17" targetElement="_BPMNShape_UserTask_13">
+        <di:waypoint xsi:type="dc:Point" x="788" y="82" />
+        <di:waypoint xsi:type="dc:Point" x="788" y="46" />
+        <di:waypoint xsi:type="dc:Point" x="840" y="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="766" y="30" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="EndEvent_4">
+        <dc:Bounds x="1005" y="28" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1023" y="69" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="SequenceFlow_20" sourceElement="_BPMNShape_UserTask_13" targetElement="_BPMNShape_EndEvent_18">
+        <di:waypoint xsi:type="dc:Point" x="940" y="46" />
+        <di:waypoint xsi:type="dc:Point" x="1005" y="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="958" y="46" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_5" bpmnElement="TextAnnotation_1">
+        <dc:Bounds x="799" y="395" width="601" height="139" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_6" bpmnElement="TextAnnotation_2">
+        <dc:Bounds x="0" y="8" width="229" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="SequenceFlow_23" sourceElement="_BPMNShape_UserTask_3" targetElement="_BPMNShape_ParallelGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="321" y="188" />
+        <di:waypoint xsi:type="dc:Point" x="407" y="188" />
+        <di:waypoint xsi:type="dc:Point" x="408" y="238" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="405" y="226" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_24" bpmnElement="SequenceFlow_24" sourceElement="_BPMNShape_ExclusiveGateway_6" targetElement="_BPMNShape_ServiceTask_3">
+        <di:waypoint xsi:type="dc:Point" x="837" y="263" />
+        <di:waypoint xsi:type="dc:Point" x="911" y="263" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="871" y="263" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0vmuyzp_di" bpmnElement="ServiceTask_2">
+        <dc:Bounds x="221" y="338" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0e2fzk0_di" bpmnElement="SequenceFlow_0e2fzk0">
+        <di:waypoint xsi:type="dc:Point" x="171" y="288" />
+        <di:waypoint xsi:type="dc:Point" x="171" y="378" />
+        <di:waypoint xsi:type="dc:Point" x="221" y="378" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="126" y="323" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_105f7k0_di" bpmnElement="SequenceFlow_105f7k0">
+        <di:waypoint xsi:type="dc:Point" x="321" y="378" />
+        <di:waypoint xsi:type="dc:Point" x="408" y="378" />
+        <di:waypoint xsi:type="dc:Point" x="408" y="288" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="319.5" y="368" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
